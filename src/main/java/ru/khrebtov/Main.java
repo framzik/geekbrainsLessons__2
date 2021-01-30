@@ -38,7 +38,7 @@ public class Main {
     for (Actions living : livingBeings) {
       for (Barrier inanimate : inanimateBeings) {
         inanimate.doAction(living);
-        if(!Power.isPower()){
+        if (!Power.isPower()) {
           Power.setPower(true);
           System.out.println();
           break;

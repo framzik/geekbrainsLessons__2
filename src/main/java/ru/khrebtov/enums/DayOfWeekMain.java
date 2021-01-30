@@ -6,8 +6,10 @@ public class DayOfWeekMain {
 
   public static void main(String[] args) {
     //System.out.println(getWorkingHours(DayOfWeek.SATURDAY));
-    for(DayOfWeek day: DayOfWeek.values()){
-      System.out.printf("Сегодня %s, до конца недели осталось рабочих часов: %s! \n", day.getRusName(), getWorkingHours(day));
+    for (DayOfWeek day : DayOfWeek.values()) {
+      System.out
+          .printf("Сегодня %s, до конца недели осталось рабочих часов: %s! \n", day.getRusName(),
+              getWorkingHours(day));
     }
 
   }
