@@ -5,7 +5,6 @@ import ru.khrebtov.Lesson2.exceptions.MyArraySizeException;
 
 public class Main {
 
-  //В методе main() вызвать полученный метод, обработать возможные исключения MyArraySizeException и MyArrayDataException и вывести результат расчета.
   public static void main(String[] args) {
     try {
       System.out.printf("Сумма в масиве составила: %d\n", arraySum(
