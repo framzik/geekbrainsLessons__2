@@ -17,9 +17,13 @@ public class Main {
 
   private static int arraySum(String[][] array)
       throws MyArraySizeException, MyArrayDataException {
-    if (array.length != 4 || array[0].length != 4) {
-      throw new MyArraySizeException("Размер массива не [4][4]!");
+
+    for (String[] strings : array) {
+      if (array.length != 4 || strings.length != 4) {
+        throw new MyArraySizeException("Размер массива не [4][4]!");
+      }
     }
+
     int sum = 0;
     int rowNumber = 0;
     int columnNumber = 0;
