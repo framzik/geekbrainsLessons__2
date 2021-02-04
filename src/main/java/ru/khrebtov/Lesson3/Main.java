@@ -27,7 +27,7 @@ public class Main {
 
   private static void uniqueWords(ArrayList<String> words) {
     HashSet<String> uniqueWords = new HashSet<>(words);
-    Map<String, Integer> countWord = new HashMap<>();
+    System.out.println("В массиве содержится такие уникальные слова: " + uniqueWords);
     int count = 0;
     for (String word : uniqueWords) {
       for (String allWord : words) {
@@ -38,12 +38,8 @@ public class Main {
       if (count == 0) {
         count++;
       }
-      countWord.put(word, count);
+      System.out.printf("Кол-во повторений слова %s - %d.\n", word, count);
       count = 0;
-    }
-    System.out.println("В массиве содержится такие уникальные слова: " + uniqueWords);
-    for (Map.Entry<String, Integer> e : countWord.entrySet()) {
-      System.out.printf("Кол-во повторений слова %s - %d.\n", e.getKey(), e.getValue());
     }
   }
 }
