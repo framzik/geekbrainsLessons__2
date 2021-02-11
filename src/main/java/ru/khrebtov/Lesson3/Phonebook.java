@@ -14,18 +14,8 @@ public class Phonebook {
    * @param surname-фамилия, telephone- телефон
    */
   public void add(String surname, String telephone) {
-    HashSet<String> phones = new HashSet<>();
-    if (phonebook.isEmpty()) {
-      phones.add(telephone);
-      phonebook.put(surname, phones);
-      return;
-    }
-    for (Map.Entry<String, HashSet<String>> e : phonebook.entrySet()) {
-      if (e.getKey().equals(surname)) {
-        phones = e.getValue();
-      }
-      phones.add(telephone);
-    }
+    HashSet<String> phones = phonebook.getOrDefault(surname, new HashSet<>());
+    phones.add(telephone);
     phonebook.put(surname, phones);
   }
 
@@ -34,12 +24,8 @@ public class Phonebook {
    * @param surname-фамилия, по которой выполняется поиск
    */
   public HashSet<String> get(String surname) {
-    HashSet<String> telephones = new HashSet<String>();
-    for (Map.Entry<String, HashSet<String>> e : phonebook.entrySet()) {
-      if (e.getKey().equals(surname)) {
-        return e.getValue();
-      }
-    }
+    HashSet<String> telephones = phonebook.getOrDefault(surname, new HashSet<>());
+
     if (telephones.isEmpty()) {
       telephones.add("В телефонном справочнике данная фамилия не найдена.");
     }
