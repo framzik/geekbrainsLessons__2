@@ -1,13 +1,11 @@
 package ru.khrebtov.Lesson5;
 
 public class Main {
-  private static int SIZE = 10000000;
+  private static final int SIZE = 10000000;
 
   public static void main(String[] args) {
-
     notMultithreadedMethod();
-    new Thread(() -> multithreadedMethod()).start();
-//    new Thread(() -> multithreadedMethod()).start();
+    multithreadedMethod();
   }
 
   public static void notMultithreadedMethod() {
@@ -28,21 +26,28 @@ public class Main {
       arr[i] = 1;
     }
     long startTime = System.currentTimeMillis();
-
-    float[] halfArr1 = new float[half];
-    System.arraycopy(arr, 0, halfArr1, 0, half);
-    float[] halfArr2 = new float[half];
-    System.arraycopy(arr, half, halfArr2, 0, half);
-
-    synchronized (halfArr1) {
+    Thread tr1 = new Thread(() -> {
+      float[] halfArr1 = new float[half];
+      System.arraycopy(arr, 0, halfArr1, 0, half);
       subtract(halfArr1);
       System.arraycopy(halfArr1, 0, arr, 0, half);
-    }
-    synchronized (halfArr2) {
+    });
+
+    Thread tr2 = new Thread(() -> {
+      float[] halfArr2 = new float[half];
+      System.arraycopy(arr, half, halfArr2, 0, half);
       subtract(halfArr2);
       System.arraycopy(halfArr2, 0, arr, half, half);
-    }
+    });
+    tr1.start();
+    tr2.start();
 
+    try {
+      tr1.join();
+      tr2.join();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
     long endTime = System.currentTimeMillis();
     System.out.println("Время выполнения с многопоточностью:" + (endTime - startTime));
   }
@@ -58,7 +63,6 @@ public class Main {
       System.out.println(arr[i]);
     }
   }
-
 
 }
 
