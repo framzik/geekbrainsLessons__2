@@ -1,6 +1,7 @@
 package ru.khrebtov.Lesson5;
 
 public class Main {
+
   private static final int SIZE = 10000000;
 
   public static void main(String[] args) {
@@ -20,7 +21,7 @@ public class Main {
   }
 
   public static void multithreadedMethod() {
-    int half = SIZE / 2;
+    final int half = SIZE / 2;
     float[] arr = new float[SIZE];
     for (int i = 0; i < SIZE; i++) {
       arr[i] = 1;
@@ -54,16 +55,10 @@ public class Main {
 
   private static void subtract(float[] arr) {
     for (int i = 0; i < arr.length; i++) {
-      arr[i] = (float) (arr[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
+      arr[i] = (float) (arr[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math
+          .cos(0.4f + i / 2));
     }
   }
-
-  private static void printArr(float[] arr) {
-    for (int i = 0; i < arr.length; i++) {
-      System.out.println(arr[i]);
-    }
-  }
-
 }
 
 
