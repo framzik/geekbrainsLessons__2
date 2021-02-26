@@ -16,37 +16,39 @@ public class Server {
       try (Socket socket = server.accept()) {
         System.out.println("Client connected");
 
-        new Thread(() -> {
-          try (Scanner scSocket = new Scanner(socket.getInputStream())) {
+        Thread t1 = new Thread(() -> {
+          try (Scanner sc = new Scanner(System.in);
+              PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
             while (true) {
-              String str;
-              if (scSocket.hasNext()) {
-                str = scSocket.nextLine();
-              } else {
-                str = "/end";
-              }
-
+              String str = sc.nextLine();
               if (str.equals("/end")) {
-                System.out.println("Client disconnected");
+                out.println("/end");
                 break;
               }
-              System.out.println("Client:" + str);
+              out.println(str);
             }
           } catch (IOException e) {
             e.printStackTrace();
           }
-        }).start();
+        });
+        t1.setDaemon(true);
+        t1.start();
 
-        try (Scanner sc = new Scanner(System.in);
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
+        try (Scanner scSocket = new Scanner(socket.getInputStream())) {
           while (true) {
-            String str = sc.nextLine();
+            String str;
+            if (scSocket.hasNext()) {
+              str = scSocket.nextLine();
+            } else {
+              str = "/end";
+            }
+
             if (str.equals("/end")) {
+              System.out.println("Client disconnected");
               System.out.println("Server stopped");
-              out.println("/end");
               break;
             }
-            out.println(str);
+            System.out.println("Client:" + str);
           }
         }
       }
